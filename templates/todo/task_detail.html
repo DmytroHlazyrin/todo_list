@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>
+  {{ task.name }}
+  <a href="{% url 'todo:task-delete' pk=task.id %}"
+     class="btn btn-danger link-to-page">
+    Delete
+  </a>
+
+  <a href="{% url 'todo:task-update' pk=task.id %}"
+     class="btn btn-secondary link-to-page">
+    Update
+  </a>
+</h1>
+<p>Author: ({{ task.author.name }}})</p>
+<h1>
+  <a href="{% url 'todo:change-status' pk=car.id %}"
+     class="btn btn-danger link-to-page">
+    Change status
+  </a>
+</h1>
+<hr>
+<ul>
+  Tags:
+  {% for tag in task.tags.all %}
+    <li>{{ tag.name }}</li>
+  {% endfor %}
+</ul>
+{% endblock %}

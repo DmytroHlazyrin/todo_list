@@ -1,0 +1,35 @@
+{% load crispy_forms_filters %}
+<ul class="sidebar-nav list-group">
+  <li class="list-group-item"><a href="{% url 'todo:index' %}">Home</a></li>
+  <li class="list-group-item"><a href="{% url 'todo:tag-list' %}">Tags</a></li>
+  {% if user.is_authenticated %}
+    <li class="list-group-item">
+      <a class="list-group-item"
+         href="{{ user.get_absolute_url }}">User: {{ user.get_username }}</a>
+    </li>
+    <li class="list-group-item">
+      <form class="d-flex" method="post" action="{% url 'logout' %}">
+        {% csrf_token %}
+        <input type="hidden" name="next" value="{% url 'logout' %}">
+        <button type="submit" class="btn btn-link btn-light">Logout</button>
+      </form>
+    </li>
+  {% else %}
+    <li class="list-group-item">
+      <a class="list-group-item" href="{% url 'login' %}?next={{ request.path }}">Login</a>
+    </li>
+  {% endif %}
+  {% if search_form %}
+  <li class="list-group-item">
+    <div class="justify-content-between align-items-center mb-3">
+        <form class="form-inline d-flex" method="get" action=""
+              style="height: 40px">
+          {{ search_form|crispy }}
+          <input class="btn btn-primary ml-2" type="submit" value="👀"
+                 style="height: 38px">
+        </form>
+    </div>
+  </li>
+  {% endif %}
+</ul>
+
